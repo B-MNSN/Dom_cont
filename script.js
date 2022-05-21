@@ -1,8 +1,8 @@
-var student = {};
-student.name = 'คุณลุง'
-student.username = 'a@b.com'
-student.gender = 'ชาย'
-console.log(student.name)
+// var student = {};
+// student.name = 'คุณลุง'
+// student.username = 'a@b.com'
+// student.gender = 'ชาย'
+// console.log(student.name)
 
 // document.getElementById('output').innerText = student;
 
@@ -27,22 +27,23 @@ console.log(student.name)
 //     addRow(output, 'username', student.username)
 //     addRow(output, 'เพศ', student.gender)
 // }
-var secondStudent = {}
-secondStudent.name = 'น่ารัก'
-secondStudent.username = 'x@y.com'
-secondStudent.gender = 'หญิง'
-window.addEventListener('load', function() {
-    addStudentData(student)
-})
 
-var students = [
-    student,
-    secondStudent, {
-        name: 'สมรักษ์',
-        username: 'm@n.com',
-        gender: 'ชาย'
-    }
-]
+// var secondStudent = {}
+// secondStudent.name = 'น่ารัก'
+// secondStudent.username = 'x@y.com'
+// secondStudent.gender = 'หญิง'
+// window.addEventListener('load', function() {
+//     addStudentData(student)
+// })
+
+// var students = [
+//     student,
+//     secondStudent, {
+//         name: 'สมรักษ์',
+//         username: 'm@n.com',
+//         gender: 'ชาย'
+//     }
+// ]
 
 function addStudentToTable(index, student) {
     const tableBody = document.getElementById('tableBody')
@@ -55,13 +56,44 @@ function addStudentToTable(index, student) {
     cell.innerHTML = student.name
     row.appendChild(cell)
     cell = document.createElement('td')
-    cell.innerHTML = student.username
+        // cell.innerHTML = student.username
+    let someDiv = document.createElement('div')
+    cell.appendChild(someDiv)
+    let imgElem = document.createElement('img')
+    someDiv.appendChild(imgElem)
+    imgElem.setAttribute('src', student.imageLink)
+    imgElem.style.width = '150px'
     row.appendChild(cell)
     cell = document.createElement('td')
     cell.innerHTML = student.gender
     row.appendChild(cell)
     tableBody.appendChild(row)
 }
-window.addEventListener('load', function() {
-    addStudentToTable(1, student)
-})
+// window.addEventListener('load', function() {
+//     addStudentToTable(students)
+// })
+
+function addStudentList(studentList) {
+    let counter = 1
+    for (student of studentList) {
+        addStudentToTable(counter++, student)
+    }
+}
+
+function onLoad() {
+    fetch('./asset/students2.json').then(response => {
+        return response.json()
+    }).then(data => {
+        let students = data
+        console.log(data)
+        addStudentList(students)
+    })
+
+    // fetch('./asset2/students2.json').then(response => {
+    //     response.json()
+    //         .then(data => {
+    //             addStudentList(data)
+    //         })
+    // })
+}
+window.addEventListener('load', onLoad)
