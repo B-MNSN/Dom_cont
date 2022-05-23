@@ -45,6 +45,16 @@
 //     }
 // ]
 
+var singleStudentResult = document.getElementById('single_student_result')
+var listStudentResult = document.getElementById('output')
+var addUserDetail = document.getElementById('addUserDetail')
+
+function hideAll() {
+    singleStudentResult.style.display = 'none'
+    listStudentResult.style.display = 'none'
+    addUserDetail.style.display = 'none'
+}
+
 function addStudentToTable(index, student) {
     const tableBody = document.getElementById('tableBody')
     let row = document.createElement('tr')
@@ -85,10 +95,20 @@ function addStudentToTable(index, student) {
     row.appendChild(cell)
     row.appendChild(cell)
     tableBody.appendChild(row)
+
+    row.addEventListener('click', function() {
+        showStudentBlock(student)
+    })
 }
 // window.addEventListener('load', function() {
 //     addStudentToTable(students)
 // })
+function showStudentBlock(student) {
+    hideAll()
+    singleStudentResult.style.display = 'block'
+    addStudentData(student)
+
+}
 
 function addStudentData(student) {
     let idElem = document.getElementById('id')
@@ -153,7 +173,7 @@ function addStudentToDB(student) {
 window.addEventListener('load', onLoad)
 
 function onLoad() {
-    showAllStudents()
+    showAllStudentsBlock()
 }
 
 function deleteStudent(id) {
@@ -191,4 +211,20 @@ function showAllStudents() {
         }).then(data => {
             addStudentList(data)
         })
+}
+
+document.getElementById('allStudentMenu').addEventListener('click', (event) => {
+    hideAll()
+    listStudentResult.style.display = 'block'
+    showAllStudents()
+})
+document.getElementById('addStudentMenu').addEventListener('click', (event) => {
+    hideAll()
+    addUserDetail.style.display = 'block'
+})
+
+function showAllStudentsBlock() {
+    hideAll()
+    listStudentResult.style.display = 'block'
+    showAllStudents()
 }
